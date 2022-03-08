@@ -19,7 +19,7 @@ class Api::V1::TournamentsController < ApplicationController
     @tournament = Tournament.new(tournament_params)
 
     if @tournament.save
-      render json: @tournament, status: :created, location: api_v1_post_path(@tournament)
+      render json: @tournament, status: :created, location: api_v1_tournaments_path(@tournament)
     else
       render json: @tournament.errors, status: :unprocessable_entity
     end
@@ -47,6 +47,6 @@ class Api::V1::TournamentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tournament_params
-      params.require(:tournament).permit(:name, :course_name, :date)
+      params.require(:tournament).permit(:id, :name, :course_name, :date)
     end
 end

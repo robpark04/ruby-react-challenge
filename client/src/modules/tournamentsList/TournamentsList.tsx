@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getApi } from "utils/apis";
+import AddEditTournament from "./components/AddEditTournament";
 import TournamentRow from "./components/TournamentRow";
 import { getTournaments } from "./selectors";
 import { addTournaments } from "./slice";
@@ -21,16 +22,12 @@ const TournamentsList = () => {
         loadTournaments();
     }, []);
 
-    const save = async (e: React.MouseEvent) => {
-        e.stopPropagation();
-    }
-
     return (
         <div>
+            <AddEditTournament />
             <Box>
                 {tournaments.map(tournament => <TournamentRow key={tournament.id} tournament={tournament} />)}
             </Box>
-            <button onClick={save}>Save</button>
         </div>
     )
 };
