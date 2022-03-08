@@ -3,6 +3,7 @@ import { getTournamentById } from "modules/tournamentsList/selectors";
 import { useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import { deleteApi } from "utils/apis";
+import TournamentPlayers from "./components/TournamentPlayers";
 
 const TournamentView = () => {
     const { id } = useParams();
@@ -20,6 +21,7 @@ const TournamentView = () => {
     return <Box>
         {tournament.name}
         <Button onClick={deleteTournament}>Delete</Button>
+        <TournamentPlayers id={tournament.id} />
     </Box>;
 };
 
