@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "../modules/tournamentsList/slice";
+import tournamentsReducer from "../modules/tournamentsList/slice";
 
-export default configureStore({
+const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    tournaments: tournamentsReducer,
   },
 });
+export type RootState = ReturnType<typeof store.getState>;
+
+export default store;
