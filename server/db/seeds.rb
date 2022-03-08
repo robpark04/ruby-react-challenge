@@ -13,3 +13,9 @@ require 'faker'
     course_name: Faker::Lorem.paragraph,
     date: Faker::Date.in_date_period)
 end
+10.times do
+  Player.create(
+    name: Faker::Lorem.sentence,
+    handicap: Faker::Number.number(digits: 2),
+    location: Faker::Address.full_address)
+end

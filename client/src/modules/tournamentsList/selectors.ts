@@ -4,10 +4,10 @@ import { RootState } from "store";
 export const getTournaments = (state: RootState) =>
   state.tournaments.tournaments;
 
-export const getTournamentById = (tid?: string) =>
+export const getTournamentById = (id?: string) =>
   createSelector(getTournaments, (tournaments) => {
-    if (!tid) {
+    if (!id) {
       return null;
     }
-    return tournaments.find((tournament) => tournament.id === parseInt(tid));
+    return tournaments.find((tournament) => tournament.id === parseInt(id));
   });

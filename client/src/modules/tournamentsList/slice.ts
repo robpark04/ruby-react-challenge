@@ -2,12 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
   tournaments: Tournament[];
-  currentTournamentId?: string;
 };
 
 const initialState: InitialState = {
   tournaments: [],
-  currentTournamentId: undefined,
 };
 
 export const tournamentsSlice = createSlice({
