@@ -55,6 +55,7 @@ const AddEditPlayer = ({ player, ...rest }: Props) => {
   const onFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
+    // @ts-ignore
     setPlayerData((data) => ({ ...data, [name]: value }));
   };
 

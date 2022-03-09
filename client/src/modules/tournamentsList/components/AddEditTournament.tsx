@@ -52,7 +52,7 @@ const AddEditTournament = ({ tournament, ...rest }: Props) => {
     afterSave();
   };
 
-  const onFieldChange = (e: ChangeEvent) => {
+  const onFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
     // @ts-ignore

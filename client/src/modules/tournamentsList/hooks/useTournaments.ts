@@ -9,6 +9,7 @@ const useTournaments = () => {
 
   const fetchTournaments = async (query = "") => {
     setIsLoading(true);
+    dispatch(addTournaments([]));
     const result = await getApi(`tournaments?${query}`);
 
     if (result?.length) {

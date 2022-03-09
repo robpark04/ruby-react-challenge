@@ -25,6 +25,9 @@ const TournamentsList = () => {
           {tournaments.map((tournament) => (
             <TournamentRow key={tournament.id} tournament={tournament} />
           ))}
+          {!tournaments.length && (
+            <Typography>No Tournaments created yet!</Typography>
+          )}
         </List>
       </Box>
       {isLoading && <PageLoading />}

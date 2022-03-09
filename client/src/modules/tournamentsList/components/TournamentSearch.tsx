@@ -9,10 +9,8 @@ const TournamentSearch = () => {
 
   const searchTournaments = async (e: FormEvent) => {
     e.preventDefault();
-    if (!date) {
-      return;
-    }
-    await fetchTournaments(`date=${date}`);
+    const query = date ? `date=${date}` : "";
+    await fetchTournaments(query);
   };
 
   return (
