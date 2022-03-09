@@ -52,9 +52,10 @@ const AddEditPlayer = ({ player, ...rest }: Props) => {
     afterSave();
   };
 
-  const onFieldChange = (e: ChangeEvent) => {
-    // @ts-ignore
-    setPlayerData((data) => ({ ...data, [e.target.name]: e.target.value }));
+  const onFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setPlayerData((data) => ({ ...data, [name]: value }));
   };
 
   const title = player ? "Edit Player" : "Add New Player";
@@ -73,7 +74,7 @@ const AddEditPlayer = ({ player, ...rest }: Props) => {
                 required
                 margin="normal"
                 fullWidth
-                inputProps={{ maxLength: 30 }}
+                inputProps={{ maxLength: 30, "data-testid": "name" }}
                 label="Player Name"
                 variant="outlined"
                 name="name"
@@ -84,7 +85,7 @@ const AddEditPlayer = ({ player, ...rest }: Props) => {
                 required
                 margin="normal"
                 fullWidth
-                inputProps={{ type: "number" }}
+                inputProps={{ type: "number", "data-testid": "handicap" }}
                 label="Handicap"
                 variant="outlined"
                 name="handicap"
@@ -95,6 +96,7 @@ const AddEditPlayer = ({ player, ...rest }: Props) => {
                 required
                 margin="normal"
                 fullWidth
+                inputProps={{ "data-testid": "location" }}
                 label="Location"
                 variant="outlined"
                 name="location"

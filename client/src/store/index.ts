@@ -1,12 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import tournamentsReducer from "../modules/tournamentsList/slice";
 import playersReducer from "../modules/playersList/slice";
 
+export const createRootReducer = () =>
+  combineReducers({ tournaments: tournamentsReducer, players: playersReducer });
 const store = configureStore({
-  reducer: {
-    tournaments: tournamentsReducer,
-    players: playersReducer,
-  },
+  reducer: createRootReducer(),
 });
 export type RootState = ReturnType<typeof store.getState>;
 

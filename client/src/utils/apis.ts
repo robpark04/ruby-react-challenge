@@ -44,7 +44,10 @@ export const postApi = async (
   };
 
   try {
-    console.info(`[API][postApi] Send POST API call to ${API_URL}${endPoint}.`);
+    console.info(
+      `[API][postApi] Send POST API call to ${API_URL}${endPoint}.`,
+      data
+    );
     const rawResponse = await fetch(`${API_URL}${endPoint}`, {
       body: JSON.stringify(data),
       headers,
