@@ -1,4 +1,5 @@
 import { Box, Button } from "@mui/material";
+import AddEditPlayer from "modules/playersList/components/AddEditPlayer";
 import { getPlayerById } from "modules/playersList/selectors";
 import { useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
@@ -20,6 +21,7 @@ const PlayerView = () => {
     }
     return <Box>
         {player.name}
+        <AddEditPlayer player={player} />
         <Button onClick={deletePlayer}>Delete</Button>
 
     </Box>;

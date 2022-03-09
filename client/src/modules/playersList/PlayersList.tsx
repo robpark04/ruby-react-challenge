@@ -1,35 +1,28 @@
 import { Box } from "@mui/material";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getApi } from "utils/apis";
 import AddEditPlayer from "./components/AddEditPlayer";
 import PlayerRow from "./components/PlayerRow";
-import { getPlayers } from "./selectors";
-import { addPlayers } from "./slice";
+import PlayerSearch from "./components/PlayerSearch";
+import usePlayers from "./hooks/usePlayers";
 
 const PlayersList = () => {
-    const players = useSelector(getPlayers)
-    const dispatch = useDispatch();
+  const { loadPlayers, filteredPlayers, name, setName } = usePlayers();
 
-    const loadPlayers = async () => {
-        const result = await getApi("players");
+  useEffect(() => {
+    loadPlayers();
+  }, []);
 
-        if (result?.length) {
-            dispatch(addPlayers(result))
-        }
-    }
-    useEffect(() => {
-        loadPlayers();
-    }, []);
-
-    return (
-        <div>
-            <AddEditPlayer />
-            <Box>
-                {players.map(player => <PlayerRow key={player.id} player={player} />)}
-            </Box>
-        </div>
-    )
+  return (
+    <div>
+      <AddEditPlayer />
+      <PlayerSearch name={name} setName={setName} />
+      <Box>
+        {filteredPlayers.map((player) => (
+          <PlayerRow key={player.id} player={player} />
+        ))}
+      </Box>
+    </div>
+  );
 };
 
 export default PlayersList;

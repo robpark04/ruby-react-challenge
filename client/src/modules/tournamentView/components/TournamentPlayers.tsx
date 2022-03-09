@@ -1,19 +1,18 @@
 import { Box, Button } from "@mui/material";
+import PlayerSearch from "modules/playersList/components/PlayerSearch";
+import usePlayers from "modules/playersList/hooks/usePlayers";
 import { useState, useEffect, useMemo } from "react";
 import { deleteApi, getApi, postApi } from "utils/apis";
 import { filterTournamentPlayers } from "../utils/filters";
 import AddScore from "./AddScore";
 
 const TournamentPlayers = ({ id }: { id: number }) => {
-  const [players, setPlayers] = useState<Player[]>([]);
   const [tournamentPlayers, setTournamentPlayers] = useState<
     TournamentPlayer[]
   >([]);
-  const loadPlayers = async () => {
-    const result = await getApi("players");
 
-    setPlayers(result);
-  };
+  const { loadPlayers, filteredPlayers: players, name, setName } = usePlayers();
+
   const loadTournamentPlayers = async () => {
     const result = await getApi(`tournament_players/${id}`);
 
@@ -52,11 +51,16 @@ const TournamentPlayers = ({ id }: { id: number }) => {
       TournamentPlayers
       {tournamentPlayers.map((player) => (
         <Box key={player.player_id}>
-          <span>{player.name} - {player.player_id} - {player.handicap}</span>
-          <Button onClick={() => removePlayer(player.player_id)}>Remove from Tournament</Button>
+          <span>
+            {player.name} - {player.player_id} - {player.handicap}
+          </span>
+          <Button onClick={() => removePlayer(player.player_id)}>
+            Remove from Tournament
+          </Button>
           <AddScore player={player} />
         </Box>
       ))}
+      <PlayerSearch name={name} setName={setName} />
       {remainingPlayers.map((player) => (
         <Box key={player.id}>
           {player.name}

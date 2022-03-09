@@ -13,7 +13,7 @@ export const playersSlice = createSlice({
   initialState,
   reducers: {
     addPlayers: (state, action) => {
-      state.players = state.players.concat(action.payload);
+      state.players = action.payload;
     },
   },
 });
