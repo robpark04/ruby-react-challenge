@@ -7,32 +7,36 @@ import {
   TextField,
 } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { postApi, updateApi } from "utils/apis";
+import { API_POST_TYPES, postApi } from "utils/apis";
+import { NotificationManager } from "react-notifications";
 
 type Props = {
   player?: Player;
 };
 const AddEditPlayer = ({ player }: Props) => {
   const [showDialog, setShowDialog] = useState(false);
-  const [playerData, setPlayerData] = useState<Player | null>(
-    player ?? null
-  );
+  const [playerData, setPlayerData] = useState<Player | null>(player ?? null);
   const savePlayer = async (e: FormEvent) => {
     e.preventDefault();
     if (!playerData) {
       return;
     }
     if (playerData.id) {
-      const result = await updateApi(`players/${playerData.id}`, {
-        ...playerData,
-        created_at: null,
-        updated_at: null,
-      });
+      const result = await postApi(
+        `players/${playerData.id}`,
+        {
+          ...playerData,
+          created_at: null,
+          updated_at: null,
+        },
+        API_POST_TYPES.UPDATE
+      );
       console.log(result);
 
       return;
     }
     const result = await postApi("players", playerData);
+    NotificationManager.success("Success message", "Title here");
     console.log(result);
   };
 

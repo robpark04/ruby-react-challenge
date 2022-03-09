@@ -3,28 +3,33 @@ import AddEditPlayer from "modules/playersList/components/AddEditPlayer";
 import { getPlayerById } from "modules/playersList/selectors";
 import { useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
-import { deleteApi } from "utils/apis";
+import { API_POST_TYPES, postApi } from "utils/apis";
 
 const PlayerView = () => {
-    const { id } = useParams();
-    const player = useSelector(getPlayerById(id));
-    const deletePlayer = async () => {
-        if (!player) {
-            return;
-        }
-        const result = await deleteApi(`players/${player.id}`)
-        console.log(result);
-    }
-
+  const { id } = useParams();
+  const player = useSelector(getPlayerById(id));
+  const deletePlayer = async () => {
     if (!player) {
-        return <Navigate to="/players" replace />
+      return;
     }
-    return <Box>
-        {player.name}
-        <AddEditPlayer player={player} />
-        <Button onClick={deletePlayer}>Delete</Button>
+    const result = await postApi(
+      `players/${player.id}`,
+      {},
+      API_POST_TYPES.DELETE
+    );
+    console.log(result);
+  };
 
-    </Box>;
+  if (!player) {
+    return <Navigate to="/players" replace />;
+  }
+  return (
+    <Box>
+      {player.name}
+      <AddEditPlayer player={player} />
+      <Button onClick={deletePlayer}>Delete</Button>
+    </Box>
+  );
 };
 
 export default PlayerView;

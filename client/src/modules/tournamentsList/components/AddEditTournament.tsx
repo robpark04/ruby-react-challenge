@@ -7,7 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { postApi, updateApi } from "utils/apis";
+import { API_POST_TYPES, postApi } from "utils/apis";
 
 type Props = {
   tournament?: Tournament;
@@ -23,11 +23,15 @@ const AddEditTournament = ({ tournament }: Props) => {
       return;
     }
     if (tournamentData.id) {
-      const result = await updateApi(`tournaments/${tournamentData.id}`, {
-        ...tournamentData,
-        created_at: null,
-        updated_at: null,
-      });
+      const result = await postApi(
+        `tournaments/${tournamentData.id}`,
+        {
+          ...tournamentData,
+          created_at: null,
+          updated_at: null,
+        },
+        API_POST_TYPES.UPDATE
+      );
       console.log(result);
 
       return;

@@ -7,7 +7,7 @@ import {
   DialogActions,
 } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { updateApi } from "utils/apis";
+import { API_POST_TYPES, postApi } from "utils/apis";
 
 type Props = {
   player: TournamentPlayer;
@@ -18,13 +18,14 @@ const AddScore = ({ player }: Props) => {
   const saveScore = async (e: FormEvent) => {
     e.preventDefault();
 
-    const result = await updateApi(
+    const result = await postApi(
       `tournament_players/${player.id}`,
       {
         ...playerData,
         created_at: null,
         updated_at: null,
-      }
+      },
+      API_POST_TYPES.UPDATE
     );
     console.log(result);
 

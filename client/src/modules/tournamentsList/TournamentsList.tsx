@@ -6,25 +6,28 @@ import TournamentRow from "./components/TournamentRow";
 import TournamentSearch from "./components/TournamentSearch";
 import { getTournaments } from "./selectors";
 import useTournaments from "./hooks/useTournaments";
+import PageLoading from "common/pageLoading/PageLoading";
 
 const TournamentsList = () => {
-    const tournaments = useSelector(getTournaments)
-    const { fetchTournaments } = useTournaments();
+  const tournaments = useSelector(getTournaments);
+  const { fetchTournaments, isLoading } = useTournaments();
 
+  useEffect(() => {
+    fetchTournaments();
+  }, []);
 
-    useEffect(() => {
-        fetchTournaments();
-    }, []);
-
-    return (
-        <div>
-            <TournamentSearch />
-            <AddEditTournament />
-            <Box>
-                {tournaments.map(tournament => <TournamentRow key={tournament.id} tournament={tournament} />)}
-            </Box>
-        </div>
-    )
+  return (
+    <>
+      <TournamentSearch />
+      <AddEditTournament />
+      <Box>
+        {tournaments.map((tournament) => (
+          <TournamentRow key={tournament.id} tournament={tournament} />
+        ))}
+      </Box>
+      {isLoading && <PageLoading />}
+    </>
+  );
 };
 
 export default TournamentsList;

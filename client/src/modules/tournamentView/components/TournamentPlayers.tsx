@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import PlayerSearch from "modules/playersList/components/PlayerSearch";
 import usePlayers from "modules/playersList/hooks/usePlayers";
 import { useState, useEffect, useMemo } from "react";
-import { deleteApi, getApi, postApi } from "utils/apis";
+import { API_POST_TYPES, getApi, postApi } from "utils/apis";
 import { filterTournamentPlayers } from "../utils/filters";
 import AddScore from "./AddScore";
 
@@ -40,7 +40,11 @@ const TournamentPlayers = ({ id }: { id: number }) => {
   };
 
   const removePlayer = async (playerId: number) => {
-    const result = await deleteApi(`tournament_players/${id}/${playerId}`);
+    const result = await postApi(
+      `tournament_players/${id}/${playerId}`,
+      {},
+      API_POST_TYPES.DELETE
+    );
     console.log(result);
   };
 

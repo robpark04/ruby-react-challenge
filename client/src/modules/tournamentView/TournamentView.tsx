@@ -3,28 +3,34 @@ import AddEditTournament from "modules/tournamentsList/components/AddEditTournam
 import { getTournamentById } from "modules/tournamentsList/selectors";
 import { useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
-import { deleteApi } from "utils/apis";
+import { API_POST_TYPES, postApi } from "utils/apis";
 import TournamentPlayers from "./components/TournamentPlayers";
 
 const TournamentView = () => {
-    const { id } = useParams();
-    const tournament = useSelector(getTournamentById(id));
-    const deleteTournament = async () => {
-        if (!tournament) {
-            return;
-        }
-        const result = await deleteApi(`tournaments/${tournament.id}`)
-        console.log(result);
-    }
+  const { id } = useParams();
+  const tournament = useSelector(getTournamentById(id));
+  const deleteTournament = async () => {
     if (!tournament) {
-        return <Navigate to="/tournaments" replace />
+      return;
     }
-    return <Box>
-        {tournament.name}
-        <AddEditTournament tournament={tournament} />
-        <Button onClick={deleteTournament}>Delete</Button>
-        <TournamentPlayers id={tournament.id} />
-    </Box>;
+    const result = await postApi(
+      `tournaments/${tournament.id}`,
+      {},
+      API_POST_TYPES.DELETE
+    );
+    console.log(result);
+  };
+  if (!tournament) {
+    return <Navigate to="/tournaments" replace />;
+  }
+  return (
+    <Box>
+      {tournament.name}
+      <AddEditTournament tournament={tournament} />
+      <Button onClick={deleteTournament}>Delete</Button>
+      <TournamentPlayers id={tournament.id} />
+    </Box>
+  );
 };
 
 export default TournamentView;
