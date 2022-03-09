@@ -53,8 +53,10 @@ const AddEditTournament = ({ tournament, ...rest }: Props) => {
   };
 
   const onFieldChange = (e: ChangeEvent) => {
+    const name = e.target.name;
+    const value = e.target.value;
     // @ts-ignore
-    setTournamentData((data) => ({ ...data, [e.target.name]: e.target.value }));
+    setTournamentData((data) => ({ ...data, [name]: value }));
   };
 
   const title = tournament ? "Edit Tournament" : "Add Tournament";
@@ -73,7 +75,7 @@ const AddEditTournament = ({ tournament, ...rest }: Props) => {
                 required
                 margin="normal"
                 fullWidth
-                inputProps={{ maxLength: 30 }}
+                inputProps={{ maxLength: 30, "data-testid": "name" }}
                 label="Tournament Name"
                 variant="outlined"
                 name="name"
@@ -84,7 +86,7 @@ const AddEditTournament = ({ tournament, ...rest }: Props) => {
                 required
                 margin="normal"
                 fullWidth
-                inputProps={{ maxLength: 30 }}
+                inputProps={{ maxLength: 30, "data-testid": "course_name" }}
                 label="Course Name"
                 variant="outlined"
                 name="course_name"
@@ -96,7 +98,7 @@ const AddEditTournament = ({ tournament, ...rest }: Props) => {
                 InputLabelProps={{ shrink: true }}
                 margin="normal"
                 fullWidth
-                inputProps={{ type: "date" }}
+                inputProps={{ type: "date", "data-testid": "date" }}
                 label="Date"
                 variant="outlined"
                 name="date"
