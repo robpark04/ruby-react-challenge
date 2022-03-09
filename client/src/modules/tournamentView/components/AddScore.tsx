@@ -8,17 +8,22 @@ import {
 } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { API_POST_TYPES, postApi } from "utils/apis";
+import { NotificationManager } from "react-notifications";
+import PageLoading from "common/pageLoading/PageLoading";
 
 type Props = {
   player: TournamentPlayer;
+  onUpdate: () => void;
 };
-const AddScore = ({ player }: Props) => {
+const AddScore = ({ player, onUpdate }: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [playerData, setPlayerData] = useState(player);
   const [showScoreDialog, setShowScoreDialog] = useState(false);
   const saveScore = async (e: FormEvent) => {
     e.preventDefault();
 
-    const result = await postApi(
+    setIsLoading(true);
+    await postApi(
       `tournament_players/${player.id}`,
       {
         ...playerData,
@@ -27,8 +32,10 @@ const AddScore = ({ player }: Props) => {
       },
       API_POST_TYPES.UPDATE
     );
-    console.log(result);
-
+    setIsLoading(false);
+    NotificationManager.success("Player score added!");
+    setShowScoreDialog(false);
+    onUpdate();
     return;
   };
   const onFieldChange = (e: ChangeEvent) => {
@@ -62,6 +69,7 @@ const AddScore = ({ player }: Props) => {
               </Button>
             </DialogActions>
           </form>
+          {isLoading && <PageLoading />}
         </Dialog>
       )}
     </>

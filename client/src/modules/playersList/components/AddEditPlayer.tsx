@@ -10,20 +10,32 @@ import {
 import { ChangeEvent, FormEvent, useState } from "react";
 import { API_POST_TYPES, postApi } from "utils/apis";
 import { NotificationManager } from "react-notifications";
+import usePlayers from "../hooks/usePlayers";
+import PageLoading from "common/pageLoading/PageLoading";
 
 type Props = ButtonProps & {
   player?: Player;
 };
 const AddEditPlayer = ({ player, ...rest }: Props) => {
   const [showDialog, setShowDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { loadPlayers } = usePlayers();
   const [playerData, setPlayerData] = useState<Player | null>(player ?? null);
+
+  const afterSave = () => {
+    setShowDialog(false);
+    NotificationManager.success("Player Saved!");
+    setIsLoading(false);
+    loadPlayers();
+  };
+
   const savePlayer = async (e: FormEvent) => {
     e.preventDefault();
     if (!playerData) {
       return;
     }
     if (playerData.id) {
-      const result = await postApi(
+      await postApi(
         `players/${playerData.id}`,
         {
           ...playerData,
@@ -32,13 +44,12 @@ const AddEditPlayer = ({ player, ...rest }: Props) => {
         },
         API_POST_TYPES.UPDATE
       );
-      console.log(result);
+      afterSave();
 
       return;
     }
-    const result = await postApi("players", playerData);
-    NotificationManager.success("Success message", "Title here");
-    console.log(result);
+    await postApi("players", playerData);
+    afterSave();
   };
 
   const onFieldChange = (e: ChangeEvent) => {
@@ -98,6 +109,7 @@ const AddEditPlayer = ({ player, ...rest }: Props) => {
               </Button>
             </DialogActions>
           </form>
+          {isLoading && <PageLoading />}
         </Dialog>
       )}
     </>

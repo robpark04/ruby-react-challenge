@@ -8,7 +8,7 @@ class Api::V1::TournamentsController < ApplicationController
       date = Date.parse(params[:date])
       @tournaments = Tournament.where(date: date.all_day)
     else
-      @tournaments = Tournament.all
+      @tournaments = Tournament.all.order(date: :desc)
     end
     render json: @tournaments
   end
@@ -40,7 +40,9 @@ class Api::V1::TournamentsController < ApplicationController
 
   # DELETE /tournaments/1
   def destroy
+    TournamentPlayer.delete_by(tournament_id: params[:id])
     @tournament.destroy
+    render json: {}
   end
 
   private

@@ -3,7 +3,7 @@ class Api::V1::PlayersController < ApplicationController
 
   # GET /players
   def index
-    @players = Player.all
+    @players = Player.all.order(created_at: :desc)
 
     render json: @players
   end
@@ -36,6 +36,8 @@ class Api::V1::PlayersController < ApplicationController
   # DELETE /players/1
   def destroy
     @player.destroy
+
+    render json: {}
   end
 
   private

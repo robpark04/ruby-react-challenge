@@ -7,24 +7,36 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import PageLoading from "common/pageLoading/PageLoading";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { API_POST_TYPES, postApi } from "utils/apis";
+import { NotificationManager } from "react-notifications";
+import useTournaments from "../hooks/useTournaments";
 
 type Props = ButtonProps & {
   tournament?: Tournament;
 };
 const AddEditTournament = ({ tournament, ...rest }: Props) => {
   const [showDialog, setShowDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { fetchTournaments } = useTournaments();
   const [tournamentData, setTournamentData] = useState<Tournament | null>(
     tournament ?? null
   );
+  const afterSave = () => {
+    setShowDialog(false);
+    NotificationManager.success("Tournament Saved!");
+    setIsLoading(false);
+    fetchTournaments();
+  };
   const saveTournament = async (e: FormEvent) => {
     e.preventDefault();
     if (!tournamentData) {
       return;
     }
+    setIsLoading(true);
     if (tournamentData.id) {
-      const result = await postApi(
+      await postApi(
         `tournaments/${tournamentData.id}`,
         {
           ...tournamentData,
@@ -33,12 +45,11 @@ const AddEditTournament = ({ tournament, ...rest }: Props) => {
         },
         API_POST_TYPES.UPDATE
       );
-      console.log(result);
-
+      afterSave();
       return;
     }
-    const result = await postApi("tournaments", tournamentData);
-    console.log(result);
+    await postApi("tournaments", tournamentData);
+    afterSave();
   };
 
   const onFieldChange = (e: ChangeEvent) => {
@@ -82,6 +93,7 @@ const AddEditTournament = ({ tournament, ...rest }: Props) => {
               />
               <TextField
                 required
+                InputLabelProps={{ shrink: true }}
                 margin="normal"
                 fullWidth
                 inputProps={{ type: "date" }}
@@ -98,6 +110,7 @@ const AddEditTournament = ({ tournament, ...rest }: Props) => {
                 Save
               </Button>
             </DialogActions>
+            {isLoading && <PageLoading />}
           </form>
         </Dialog>
       )}

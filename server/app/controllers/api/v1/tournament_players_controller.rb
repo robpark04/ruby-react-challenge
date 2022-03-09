@@ -38,12 +38,14 @@ class Api::V1::TournamentPlayersController < ApplicationController
   # DELETE /tournaments/1
   def destroy
     @tournamentPlayers.destroy
+    render json: {}
   end
 
   # DELETE /tournaments/1/2
   def destroyPlayer
     puts params
     TournamentPlayer.delete_by(tournament_id: params[:id], player_id: params[:player])
+    render json: {}
   end
 
   private
