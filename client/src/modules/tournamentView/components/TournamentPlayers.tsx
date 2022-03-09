@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Divider,
   List,
   ListItem,
   ListItemText,
@@ -76,22 +75,22 @@ const TournamentPlayers = ({ id }: { id: number }) => {
         )}
         <List dense sx={{ maxWidth: 480 }}>
           {tournamentPlayers.map((player) => (
-            <>
-              <ListItem key={player.player_id}>
-                <ListItemText
-                  primary={player.name}
-                  secondary={`Score: ${player.score || "NA"}`}
-                />
-                <AddScore player={player} onUpdate={loadTournamentPlayers} />
-                <Button
-                  color="error"
-                  onClick={() => removePlayer(player.player_id)}
-                >
-                  Remove
-                </Button>
-              </ListItem>
-              <Divider />
-            </>
+            <ListItem
+              key={player.player_id}
+              sx={{ borderBottom: "1px solid #ddd" }}
+            >
+              <ListItemText
+                primary={player.name}
+                secondary={`Score: ${player.score || "NA"}`}
+              />
+              <AddScore player={player} onUpdate={loadTournamentPlayers} />
+              <Button
+                color="error"
+                onClick={() => removePlayer(player.player_id)}
+              >
+                Remove
+              </Button>
+            </ListItem>
           ))}
         </List>
       </Box>
@@ -102,18 +101,15 @@ const TournamentPlayers = ({ id }: { id: number }) => {
         <PlayerSearch name={name} setName={setName} />
         <List dense sx={{ maxWidth: 480 }}>
           {remainingPlayers.map((player) => (
-            <>
-              <ListItem key={player.id}>
-                <ListItemText
-                  primary={player.name}
-                  secondary={`Handicap: ${player.handicap || "NA"}`}
-                />
-                <Tooltip title={`Add ${player.name} to this tournament`}>
-                  <Button onClick={() => addPlayer(player)}>Add</Button>
-                </Tooltip>
-              </ListItem>
-              <Divider />
-            </>
+            <ListItem key={player.id} sx={{ borderBottom: "1px solid #ddd" }}>
+              <ListItemText
+                primary={player.name}
+                secondary={`Handicap: ${player.handicap || "NA"}`}
+              />
+              <Tooltip title={`Add ${player.name} to this tournament`}>
+                <Button onClick={() => addPlayer(player)}>Add</Button>
+              </Tooltip>
+            </ListItem>
           ))}
         </List>
       </Box>

@@ -35,6 +35,7 @@ class Api::V1::PlayersController < ApplicationController
 
   # DELETE /players/1
   def destroy
+    TournamentPlayer.delete_by(player_id: params[:id])
     @player.destroy
 
     render json: {}

@@ -9,6 +9,7 @@ import { NotificationManager } from "react-notifications";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import PageLoading from "common/pageLoading/PageLoading";
+import { DateRange, GolfCourse } from "@mui/icons-material";
 
 const TournamentView = () => {
   let navigate = useNavigate();
@@ -37,6 +38,13 @@ const TournamentView = () => {
   return (
     <Box>
       <Typography variant="h5">{tournament.name}</Typography>
+      <Typography variant="body1">
+        <DateRange sx={{ verticalAlign: "bottom" }} /> {tournament.date}
+      </Typography>
+      <Typography variant="body2">
+        <GolfCourse sx={{ verticalAlign: "bottom" }} />
+        {tournament.course_name}
+      </Typography>
       <Box sx={{ mt: 2 }}>
         <AddEditTournament
           color="primary"

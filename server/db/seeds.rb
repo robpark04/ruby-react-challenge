@@ -7,15 +7,15 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 require 'faker'
-10.times do
+100.times do
   Tournament.create(
-    name: Faker::Lorem.sentence,
-    course_name: Faker::Lorem.paragraph,
+    name: Faker::Company.name,
+    course_name: Faker::Coffee.blend_name,
     date: Faker::Date.in_date_period)
 end
-10.times do
+100.times do
   Player.create(
-    name: Faker::Lorem.sentence,
+    name: Faker::Name.name,
     handicap: Faker::Number.number(digits: 2),
     location: Faker::Address.full_address)
 end
