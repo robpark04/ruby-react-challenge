@@ -6,33 +6,69 @@ import logo from "./logo.svg";
 import { Provider } from "react-redux";
 import store from "./store";
 import { NotificationContainer } from "react-notifications";
+import {
+  Container,
+  createTheme,
+  Divider,
+  Stack,
+  ThemeProvider,
+} from "@mui/material";
 
 const useStyles = makeStyles(() => ({
   logo: {
     height: "3em",
     verticalAlign: "middle",
   },
+  headerLinks: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    textDecoration: "none",
+  },
 }));
+const theme = createTheme({});
 
 const App = () => {
   const styles = useStyles();
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <div className="App">
-          <header className="App-header">
-            <Link to={"/"}>
-              <img src={logo} className={styles.logo} alt="logo" />
-              PGA Tour
-            </Link>
-            <Link to={"/tournaments"}>Tournaments List</Link>
-            <Link to={"/players"}>Players List</Link>
-          </header>
-          <AppRoutes />
-          <NotificationContainer />
-        </div>
-      </BrowserRouter>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Container
+            component={"header"}
+            sx={{
+              paddingTop: "0.5em",
+              paddingBottom: "0.5em",
+            }}
+          >
+            <Stack direction="row" spacing={2}>
+              <Link to={"/"} className={styles.headerLinks}>
+                <img src={logo} className={styles.logo} alt="logo" />
+              </Link>
+              <Link to={"/tournaments"} className={styles.headerLinks}>
+                Tournaments
+              </Link>
+              <Link to={"/players"} className={styles.headerLinks}>
+                Players
+              </Link>
+            </Stack>
+            <Divider />
+          </Container>
+          <main>
+            <Container
+              sx={{
+                mt: 3,
+                position: "relative",
+                minHeight: "calc(100vh - 90px)",
+              }}
+            >
+              <AppRoutes />
+              <NotificationContainer />
+            </Container>
+          </main>
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   );
 };
 

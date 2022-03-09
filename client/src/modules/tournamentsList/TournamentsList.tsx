@@ -1,7 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, List, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import AddEditTournament from "./components/AddEditTournament";
 import TournamentRow from "./components/TournamentRow";
 import TournamentSearch from "./components/TournamentSearch";
 import { getTournaments } from "./selectors";
@@ -19,11 +18,14 @@ const TournamentsList = () => {
   return (
     <>
       <TournamentSearch />
-      <AddEditTournament />
-      <Box>
-        {tournaments.map((tournament) => (
-          <TournamentRow key={tournament.id} tournament={tournament} />
-        ))}
+
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h5">Tournaments</Typography>
+        <List>
+          {tournaments.map((tournament) => (
+            <TournamentRow key={tournament.id} tournament={tournament} />
+          ))}
+        </List>
       </Box>
       {isLoading && <PageLoading />}
     </>

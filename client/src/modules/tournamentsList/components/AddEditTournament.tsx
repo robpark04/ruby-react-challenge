@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonProps,
   Dialog,
   DialogActions,
   DialogContent,
@@ -9,10 +10,10 @@ import {
 import { ChangeEvent, FormEvent, useState } from "react";
 import { API_POST_TYPES, postApi } from "utils/apis";
 
-type Props = {
+type Props = ButtonProps & {
   tournament?: Tournament;
 };
-const AddEditTournament = ({ tournament }: Props) => {
+const AddEditTournament = ({ tournament, ...rest }: Props) => {
   const [showDialog, setShowDialog] = useState(false);
   const [tournamentData, setTournamentData] = useState<Tournament | null>(
     tournament ?? null
@@ -49,7 +50,9 @@ const AddEditTournament = ({ tournament }: Props) => {
 
   return (
     <>
-      <Button onClick={() => setShowDialog(true)}>{title}</Button>
+      <Button {...rest} onClick={() => setShowDialog(true)}>
+        {title}
+      </Button>
       {showDialog && (
         <Dialog open>
           <form onSubmit={saveTournament}>

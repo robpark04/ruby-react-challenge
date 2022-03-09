@@ -5,24 +5,13 @@ import TournamentView from "modules/tournamentView/TournamentView";
 import { Routes, Route } from "react-router-dom";
 
 const AppRoutes = (): React.ReactElement | null => {
-  const render = (component: JSX.Element) => {
-    // const token = localStorage.getItem("token");
-
-    // if (!token) {
-    //   return null;
-    // }
-
-    return component;
-  };
-
   return (
     <Routes>
-      <Route path="/" element={render(<TournamentsList />)} />
-      <Route path="/tournaments" element={render(<TournamentsList />)} />
-      <Route path="/tournament/:id" element={render(<TournamentView />)} />
-      <Route path="/players" element={render(<PlayersList />)} />
-      <Route path="/player/:id" element={render(<PlayerView />)} />
-
+      <Route path="/" element={<TournamentsList />} />
+      <Route path="/tournaments" element={<TournamentsList />} />
+      <Route path="/tournament/:id" element={<TournamentView />} />
+      <Route path="/players" element={<PlayersList />} />
+      <Route path="/player/:id" element={<PlayerView />} />
     </Routes>
   );
 };

@@ -1,6 +1,7 @@
-import { Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
 import useTournaments from "../hooks/useTournaments";
+import AddEditTournament from "./AddEditTournament";
 
 const TournamentSearch = () => {
   const [date, setDate] = useState<string>("");
@@ -15,14 +16,23 @@ const TournamentSearch = () => {
   };
 
   return (
-    <>
+    <Box>
       <form onSubmit={searchTournaments}>
-        <TextField id="outlined-search" label="Search field" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-        <Button type="submit">Search</Button>
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          label="Filter by tournament date"
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          sx={{ "& input": { pt: 1, pb: 1 } }}
+        />
+        <Button sx={{ ml: 2 }} variant="contained" type="submit">
+          Search
+        </Button>
+        <AddEditTournament variant="contained" sx={{ float: "right" }} />
       </form>
-
-    </>
+    </Box>
   );
-}
+};
 
 export default TournamentSearch;
