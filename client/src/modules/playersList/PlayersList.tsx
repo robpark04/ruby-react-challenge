@@ -9,6 +9,7 @@ const PlayersList = () => {
 
   useEffect(() => {
     loadPlayers();
+    // @ts-ignore
   }, []);
 
   return (

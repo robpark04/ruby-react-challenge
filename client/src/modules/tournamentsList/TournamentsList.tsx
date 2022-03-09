@@ -13,6 +13,7 @@ const TournamentsList = () => {
 
   useEffect(() => {
     fetchTournaments();
+    // @ts-ignore
   }, []);
 
   return (

@@ -32,6 +32,7 @@ const TournamentPlayers = ({ id }: { id: number }) => {
   useEffect(() => {
     loadPlayers();
     loadTournamentPlayers();
+    // @ts-ignore
   }, []);
 
   const remainingPlayers = useMemo(
