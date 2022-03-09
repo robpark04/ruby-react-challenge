@@ -1,4 +1,5 @@
 import { Box, Button } from "@mui/material";
+import AddEditTournament from "modules/tournamentsList/components/AddEditTournament";
 import { getTournamentById } from "modules/tournamentsList/selectors";
 import { useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
@@ -20,6 +21,7 @@ const TournamentView = () => {
     }
     return <Box>
         {tournament.name}
+        <AddEditTournament tournament={tournament} />
         <Button onClick={deleteTournament}>Delete</Button>
         <TournamentPlayers id={tournament.id} />
     </Box>;

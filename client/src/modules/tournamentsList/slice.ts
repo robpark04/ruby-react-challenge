@@ -13,7 +13,7 @@ export const tournamentsSlice = createSlice({
   initialState,
   reducers: {
     addTournaments: (state, action) => {
-      state.tournaments = state.tournaments.concat(action.payload);
+      state.tournaments = action.payload;
     },
   },
 });

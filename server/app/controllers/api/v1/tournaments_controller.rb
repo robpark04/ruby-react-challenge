@@ -4,8 +4,12 @@ class Api::V1::TournamentsController < ApplicationController
 
   # GET /tournaments
   def index
-    @tournaments = Tournament.all
-
+    if params[:date]
+      date = Date.parse(params[:date])
+      @tournaments = Tournament.where(date: date.all_day)
+    else
+      @tournaments = Tournament.all
+    end
     render json: @tournaments
   end
 
