@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :tournaments
       resources :players
       resources :tournament_players
+      delete 'tournament_players/:id/:player' => 'tournament_players#destroyPlayer', :as=>:remove_player_from_tournament
     end
   end
 

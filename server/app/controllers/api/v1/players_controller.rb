@@ -18,7 +18,7 @@ class Api::V1::PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      render json: @player, status: :created, location: api_v1_player_path(@post)
+      render json: @player, status: :created, location: api_v1_player_path(@player)
     else
       render json: @player.errors, status: :unprocessable_entity
     end
