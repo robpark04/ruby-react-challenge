@@ -13,7 +13,7 @@ const TournamentsList = () => {
 
   useEffect(() => {
     fetchTournaments();
-    // @ts-ignore
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
