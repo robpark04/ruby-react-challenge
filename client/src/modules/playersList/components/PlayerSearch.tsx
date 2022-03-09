@@ -1,4 +1,5 @@
 import { TextField } from "@mui/material";
+import AddEditPlayer from "./AddEditPlayer";
 
 type Props = {
   name: string;
@@ -8,11 +9,14 @@ const PlayerSearch = ({ name, setName }: Props) => {
   return (
     <form>
       <TextField
-        label="Search by player name"
+        label="Filter by player name"
         value={name}
         autoComplete="off"
+        InputLabelProps={{ shrink: true }}
+        sx={{ "& input": { pt: 1, pb: 1 } }}
         onChange={(e) => setName(e.target.value.toLowerCase())}
       />
+      <AddEditPlayer variant="contained" sx={{ float: "right" }} />
     </form>
   );
 };

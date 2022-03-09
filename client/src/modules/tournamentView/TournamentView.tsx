@@ -1,8 +1,8 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import AddEditTournament from "modules/tournamentsList/components/AddEditTournament";
 import { getTournamentById } from "modules/tournamentsList/selectors";
 import { useSelector } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { API_POST_TYPES, postApi } from "utils/apis";
 import TournamentPlayers from "./components/TournamentPlayers";
 
@@ -21,13 +21,26 @@ const TournamentView = () => {
     console.log(result);
   };
   if (!tournament) {
-    return <Navigate to="/tournaments" replace />;
+    return null;
   }
   return (
     <Box>
-      {tournament.name}
-      <AddEditTournament tournament={tournament} />
-      <Button onClick={deleteTournament}>Delete</Button>
+      <Typography variant="h5">{tournament.name}</Typography>
+      <Box sx={{ mt: 2 }}>
+        <AddEditTournament
+          color="primary"
+          variant="contained"
+          tournament={tournament}
+        />
+        <Button
+          sx={{ ml: 2 }}
+          color="error"
+          variant="contained"
+          onClick={deleteTournament}
+        >
+          Delete
+        </Button>
+      </Box>
       <TournamentPlayers id={tournament.id} />
     </Box>
   );

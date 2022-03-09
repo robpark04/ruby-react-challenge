@@ -21,7 +21,7 @@ const TournamentsList = () => {
 
       <Box sx={{ mt: 4 }}>
         <Typography variant="h5">Tournaments</Typography>
-        <List>
+        <List dense sx={{ maxWidth: 480 }}>
           {tournaments.map((tournament) => (
             <TournamentRow key={tournament.id} tournament={tournament} />
           ))}

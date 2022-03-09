@@ -1,4 +1,13 @@
-import { Box, Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+  Tooltip,
+} from "@mui/material";
 import PlayerSearch from "modules/playersList/components/PlayerSearch";
 import usePlayers from "modules/playersList/hooks/usePlayers";
 import { useState, useEffect, useMemo } from "react";
@@ -51,26 +60,52 @@ const TournamentPlayers = ({ id }: { id: number }) => {
   console.log(tournamentPlayers);
 
   return (
-    <Box>
-      TournamentPlayers
-      {tournamentPlayers.map((player) => (
-        <Box key={player.player_id}>
-          <span>
-            {player.name} - {player.player_id} - {player.handicap}
-          </span>
-          <Button onClick={() => removePlayer(player.player_id)}>
-            Remove from Tournament
-          </Button>
-          <AddScore player={player} />
-        </Box>
-      ))}
-      <PlayerSearch name={name} setName={setName} />
-      {remainingPlayers.map((player) => (
-        <Box key={player.id}>
-          {player.name}
-          <Button onClick={() => addPlayer(player)}>Add to Tournament</Button>
-        </Box>
-      ))}
+    <Box sx={{ mt: 2 }}>
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="h6">Players in this tournament</Typography>
+        <List dense sx={{ maxWidth: 480 }}>
+          {tournamentPlayers.map((player) => (
+            <>
+              <ListItem key={player.player_id}>
+                <ListItemText
+                  primary={player.name}
+                  secondary={`Score: ${player.score || "NA"}`}
+                />
+                <AddScore player={player} />
+                <Button
+                  color="error"
+                  onClick={() => removePlayer(player.player_id)}
+                >
+                  Remove
+                </Button>
+              </ListItem>
+              <Divider />
+            </>
+          ))}
+        </List>
+      </Box>
+      <Box>
+        <Typography sx={{ mb: 2 }} variant="h6">
+          Add new players to this tournament
+        </Typography>
+        <PlayerSearch name={name} setName={setName} />
+        <List dense sx={{ maxWidth: 480 }}>
+          {remainingPlayers.map((player) => (
+            <>
+              <ListItem key={player.id}>
+                <ListItemText
+                  primary={player.name}
+                  secondary={`Handicap: ${player.handicap || "NA"}`}
+                />
+                <Tooltip title={`Add ${player.name} to this tournament`}>
+                  <Button onClick={() => addPlayer(player)}>Add</Button>
+                </Tooltip>
+              </ListItem>
+              <Divider />
+            </>
+          ))}
+        </List>
+      </Box>
     </Box>
   );
 };

@@ -1,6 +1,5 @@
-import { Box } from "@mui/material";
+import { Box, List, Typography } from "@mui/material";
 import { useEffect } from "react";
-import AddEditPlayer from "./components/AddEditPlayer";
 import PlayerRow from "./components/PlayerRow";
 import PlayerSearch from "./components/PlayerSearch";
 import usePlayers from "./hooks/usePlayers";
@@ -14,12 +13,14 @@ const PlayersList = () => {
 
   return (
     <div>
-      <AddEditPlayer />
       <PlayerSearch name={name} setName={setName} />
-      <Box>
-        {filteredPlayers.map((player) => (
-          <PlayerRow key={player.id} player={player} />
-        ))}
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h5">Players</Typography>
+        <List dense sx={{ maxWidth: 480 }}>
+          {filteredPlayers.map((player) => (
+            <PlayerRow key={player.id} player={player} />
+          ))}
+        </List>
       </Box>
     </div>
   );

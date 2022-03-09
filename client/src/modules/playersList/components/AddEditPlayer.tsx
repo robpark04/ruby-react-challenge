@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonProps,
   Dialog,
   DialogActions,
   DialogContent,
@@ -10,10 +11,10 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { API_POST_TYPES, postApi } from "utils/apis";
 import { NotificationManager } from "react-notifications";
 
-type Props = {
+type Props = ButtonProps & {
   player?: Player;
 };
-const AddEditPlayer = ({ player }: Props) => {
+const AddEditPlayer = ({ player, ...rest }: Props) => {
   const [showDialog, setShowDialog] = useState(false);
   const [playerData, setPlayerData] = useState<Player | null>(player ?? null);
   const savePlayer = async (e: FormEvent) => {
@@ -45,11 +46,13 @@ const AddEditPlayer = ({ player }: Props) => {
     setPlayerData((data) => ({ ...data, [e.target.name]: e.target.value }));
   };
 
-  const title = player ? "Edit Player" : "Add Player";
+  const title = player ? "Edit Player" : "Add New Player";
 
   return (
     <>
-      <Button onClick={() => setShowDialog(true)}>{title}</Button>
+      <Button {...rest} onClick={() => setShowDialog(true)}>
+        {title}
+      </Button>
       {showDialog && (
         <Dialog open>
           <form onSubmit={savePlayer}>
